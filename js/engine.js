@@ -66,6 +66,11 @@ var Engine = (function(global) {
         reset();
         lastTime = Date.now();
         main();
+
+        //Register the service worker
+        if ('serviceWorker' in navigator) {
+            registerServiceWorker();
+        }
     }
 
     /* This function is called by main (our game loop) and itself calls all
@@ -162,6 +167,16 @@ var Engine = (function(global) {
      */
     function reset() {
         // noop
+    }
+
+    /*This function registers the service worker
+    */
+    function registerServiceWorker(){
+        navigator.serviceWorker.register('sw.js').then(reg => {
+                console.log('SW registered: ', reg);
+            }).catch(ferr => {
+                console.log('SW failed: ', err);
+        });
     }
 
     /* Go ahead and load all of the images we know we're going to need to
